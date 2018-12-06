@@ -10,15 +10,24 @@ class Shop {
   constructor(items = []) {
     this.items = items;
   }
+
+  isNotAgedBrie(i) {
+    return this.items[i].name != "Aged Brie";
+  }
+
+  isNotTicket(i) {
+    return this.items[i].name != "Backstage passes to a TAFKAL80ETC concert";
+  }
+
+  isNotSulfuras(i) {
+    return this.items[i].name != "Sulfuras, Hand of Ragnaros";
+  }
   updateQuality() {
     //loop though the
     for (let i = 0; i < this.items.length; i++) {
-      if (
-        this.items[i].name != "Aged Brie" &&
-        this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
-      ) {
+      if (this.isNotAgedBrie(i) && this.isNotTicket(i)) {
         if (this.items[i].quality > 0) {
-          if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
+          if (this.isNotSulfuras(i)) {
             this.items[i].quality = this.items[i].quality - 1;
           }
         }
@@ -41,16 +50,14 @@ class Shop {
           }
         }
       }
-      if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
+      if (this.isNotSulfuras(i)) {
         this.items[i].sellIn = this.items[i].sellIn - 1;
       }
       if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != "Aged Brie") {
-          if (
-            this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
-          ) {
+        if (this.isNotAgedBrie(i)) {
+          if (this.isNotTicket(i)) {
             if (this.items[i].quality > 0) {
-              if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
+              if (this.isNotSulfuras(i)) {
                 this.items[i].quality = this.items[i].quality - 1;
               }
             }
