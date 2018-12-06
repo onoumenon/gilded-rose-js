@@ -20,45 +20,47 @@ class Shop {
   }
 
   removeSulfuras() {
-    return this.items.filter(item => item.name !== "Sulfuras, Hand of Ragnaros")
+    return this.items.filter(
+      item => item.name !== "Sulfuras, Hand of Ragnaros"
+    );
   }
   updateQuality() {
-    let items = this.removeSulfuras()
+    let items = this.removeSulfuras();
     for (let item of items) {
       if (this.isNotAgedBrie(item) && this.isNotTicket(item)) {
         if (item.quality > 0) {
-            item.quality -= 1;
+          item.quality--;
         }
       } else {
         if (item.quality < 50) {
-          item.quality = item.quality + 1;
+          item.quality++;
           if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
             if (item.sellIn < 11) {
               if (item.quality < 50) {
-                item.quality += 1;
+                item.quality++;
               }
             }
             if (item.sellIn < 6) {
               if (item.quality < 50) {
-                item.quality += 1;
+                item.quality++;
               }
             }
           }
         }
       }
-        item.sellIn -= 1;
+      item.sellIn--;
       if (item.sellIn < 0) {
         if (this.isNotAgedBrie(item)) {
           if (this.isNotTicket(item)) {
             if (item.quality > 0) {
-              item.quality = item.quality - 1;
+              item.quality--;
             }
           } else {
             item.quality = 0;
           }
         } else {
           if (item.quality < 50) {
-            item.quality += 1;
+            item.quality++;
           }
         }
       }
