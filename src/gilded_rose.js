@@ -24,12 +24,17 @@ class Shop {
       item => item.name !== "Sulfuras, Hand of Ragnaros"
     );
   }
+
+  isExpired(item) {
+    return item.sellIn < 0
+  }
+
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
       if (this.isNotAgedBrie(item) && this.isNotTicket(item)) {
-        if (item.quality > 0) {
-          item.quality--;
+        if(item.quality > 0){
+          item.quality--
         }
       } else {
         if (item.quality < 50) {
@@ -45,7 +50,7 @@ class Shop {
         }
       }
       item.sellIn--;
-      if (item.sellIn < 0) {
+      if (this.isExpired(item)) {
         if (this.isNotAgedBrie(item)) {
           if (this.isNotTicket(item)) {
             if (item.quality > 0) {
