@@ -19,16 +19,15 @@ class Shop {
     return item.name != "Backstage passes to a TAFKAL80ETC concert";
   }
 
-  isNotSulfuras(item) {
-    return item.name != "Sulfuras, Hand of Ragnaros";
+  removeSulfuras() {
+    return this.items.filter(item => item.name !== "Sulfuras, Hand of Ragnaros")
   }
   updateQuality() {
-    for (let item of this.items) {
+    let items = this.removeSulfuras()
+    for (let item of items) {
       if (this.isNotAgedBrie(item) && this.isNotTicket(item)) {
         if (item.quality > 0) {
-          if (this.isNotSulfuras(item)) {
             item.quality -= 1;
-          }
         }
       } else {
         if (item.quality < 50) {
@@ -47,13 +46,11 @@ class Shop {
           }
         }
       }
-      if (this.isNotSulfuras(item)) {
         item.sellIn -= 1;
-      }
       if (item.sellIn < 0) {
         if (this.isNotAgedBrie(item)) {
           if (this.isNotTicket(item)) {
-            if (item.quality > 0 && this.isNotSulfuras(item)) {
+            if (item.quality > 0) {
               item.quality = item.quality - 1;
             }
           } else {
