@@ -26,16 +26,26 @@ class Shop {
   }
 
   isExpired(item) {
-    return item.sellIn < 0
+    return item.sellIn < 0;
+  }
+
+  increment(item) {
+    if (item.quality < 50) {
+      item.quality++;
+    }
+  }
+
+  decrement(item) {
+    if (item.quality > 0) {
+      item.quality--;
+    }
   }
 
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
       if (this.isNotAgedBrie(item) && this.isNotTicket(item)) {
-        if(item.quality > 0){
-          item.quality--
-        }
+        this.decrement(item);
       } else {
         if (item.quality < 50) {
           item.quality++;
@@ -53,16 +63,12 @@ class Shop {
       if (this.isExpired(item)) {
         if (this.isNotAgedBrie(item)) {
           if (this.isNotTicket(item)) {
-            if (item.quality > 0) {
-              item.quality--;
-            }
+            this.decrement(item);
           } else {
             item.quality = 0;
           }
         } else {
-          if (item.quality < 50) {
-            item.quality++;
-          }
+          this.increment(item);
         }
       }
     }
