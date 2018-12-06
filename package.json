@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/emilybache/GildedRose-Refactoring-Kata.git"
+    "url": "git+https://github.com/thoughtworks-jumpstart/gilded-rose-js"
   },
   "keywords": [
     "kata",
@@ -18,9 +18,9 @@
   "license": "MIT",
   "private": true,
   "bugs": {
-    "url": "https://github.com/emilybache/GildedRose-Refactoring-Kata/issues"
+    "url": "https://github.com/thoughtworks-jumpstart/gilded-rose-js/issues"
   },
-  "homepage": "https://github.com/emilybache/GildedRose-Refactoring-Kata#readme",
+  "homepage": "https://github.com/thoughtworks-jumpstart/gilded-rose-js#readme",
   "devDependencies": {},
   "dependencies": {
     "jest": "^23.6.0"
