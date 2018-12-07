@@ -54,13 +54,6 @@ class Shop {
     }
   }
 
-  updateAgedBrieAndTicket(item) {
-    this.incrementQuality(item);
-    if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-      this.backstagePassQualityUpdate(item);
-    }
-  }
-
   whenNotTicket(item) {
     if (this.isNotTicket(item)) {
       this.decrementQuality(item);
@@ -78,13 +71,14 @@ class Shop {
   }
 
   updateAgedBrie(item) {
-    this.updateAgedBrieAndTicket(item);
+    this.incrementQuality(item);
     if (item.sellIn < 1) {
       this.incrementQuality(item);
     }
   }
-  updateTicket(item){
-    this.updateAgedBrieAndTicket(item);
+  updateTicket(item) {
+    this.incrementQuality(item);
+    this.backstagePassQualityUpdate(item);
     if (item.sellIn < 1) {
       item.quality = 0;
     }
