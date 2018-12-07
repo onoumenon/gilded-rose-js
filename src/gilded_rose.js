@@ -11,8 +11,8 @@ class Shop {
     this.items = items;
   }
 
-  isNotAgedBrie(item) {
-    return item.name != "Aged Brie";
+  isAgedBrie(item) {
+    return item.name === "Aged Brie"
   }
 
   isNotTicket(item) {
@@ -29,13 +29,13 @@ class Shop {
     return item.sellIn < 0;
   }
 
-  increment(item) {
+  incrementQuality(item) {
     if (item.quality < 50) {
       item.quality++;
     }
   }
 
-  decrement(item) {
+  decrementQuality(item) {
     if (item.quality > 0) {
       item.quality--;
     }
@@ -43,15 +43,15 @@ class Shop {
 
   backstagePassQualityUpdate(item) {
     if (item.sellIn < 11) {
-      this.increment(item);
+      this.incrementQuality(item);
     }
     if (item.sellIn < 6) {
-      this.increment(item);
+      this.incrementQuality(item);
     }
   }
 
   updateAgedBrieAndTicket(item) {
-    this.increment(item);
+    this.incrementQuality(item);
     if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
       this.backstagePassQualityUpdate(item);
     }
@@ -59,21 +59,21 @@ class Shop {
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
-      if (this.isNotAgedBrie(item) && this.isNotTicket(item)) {
-        this.decrement(item);
+      if (!this.isAgedBrie(item) && this.isNotTicket(item)) {
+        this.decrementQuality(item);
       } else {
         this.updateAgedBrieAndTicket(item);
       }
       item.sellIn--;
       if (this.isExpired(item)) {
-        if (this.isNotAgedBrie(item)) {
+        if (!this.isAgedBrie(item)) {
           if (this.isNotTicket(item)) {
-            this.decrement(item);
+            this.decrementQuality(item);
           } else {
             item.quality = 0;
           }
         } else {
-          this.increment(item);
+          this.incrementQuality(item);
         }
       }
     }
