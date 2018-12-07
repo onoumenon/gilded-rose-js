@@ -49,16 +49,20 @@ class Shop {
       this.increment(item);
     }
   }
+
+  updateAgedBrieAndTicket(item) {
+    this.increment(item);
+    if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
+      this.backstagePassQualityUpdate(item);
+    }
+  }
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
       if (this.isNotAgedBrie(item) && this.isNotTicket(item)) {
         this.decrement(item);
       } else {
-        this.increment(item);
-        if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-          this.backstagePassQualityUpdate(item);
-        }
+        this.updateAgedBrieAndTicket(item);
       }
       item.sellIn--;
       if (this.isExpired(item)) {
