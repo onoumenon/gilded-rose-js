@@ -39,9 +39,9 @@ class Shop {
     }
   }
 
-  decrementQuality(item) {
+  decrementQuality(item, numberOfTimes = 1) {
     if (item.quality > 0) {
-      item.quality--;
+      item.quality -= numberOfTimes;
     }
   }
 
@@ -84,11 +84,9 @@ class Shop {
 
   updateConjuredItem(item) {
     if (this.isConjuredItem(item)) {
-      this.decrementQuality(item);
-      this.decrementQuality(item);
+      this.decrementQuality(item, 2);
       if (this.isExpired(item)) {
-        this.decrementQuality(item);
-        this.decrementQuality(item);
+        this.decrementQuality(item, 2);
       }
     }
   }
