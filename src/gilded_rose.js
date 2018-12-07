@@ -12,7 +12,11 @@ class Shop {
   }
 
   isAgedBrie(item) {
-    return item.name === "Aged Brie"
+    return item.name === "Aged Brie";
+  }
+
+  isTicket(item) {
+    return item.name === "Backstage passes to a TAFKAL80ETC concert";
   }
 
   isNotTicket(item) {
@@ -65,15 +69,17 @@ class Shop {
         this.updateAgedBrieAndTicket(item);
       }
       item.sellIn--;
+      if (this.isAgedBrie(item) && this.isExpired(item)) {
+        this.incrementQuality(item);
+      }
+      if (this.isTicket(item) && this.isExpired(item)) {
+        item.quality = 0;
+      }
       if (this.isExpired(item)) {
         if (!this.isAgedBrie(item)) {
           if (this.isNotTicket(item)) {
             this.decrementQuality(item);
-          } else {
-            item.quality = 0;
           }
-        } else {
-          this.incrementQuality(item);
         }
       }
     }
