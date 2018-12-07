@@ -73,26 +73,35 @@ class Shop {
     }
   }
 
-  normalItems(item){
-    return item.name === 'Normal Item';
+  normalItems(item) {
+    return item.name === "Normal Item";
   }
 
+  updateAgedBrie(item) {
+    this.updateAgedBrieAndTicket(item);
+    if (item.sellIn < 1) {
+      this.incrementQuality(item);
+    }
+  }
+  updateTicket(item){
+    this.updateAgedBrieAndTicket(item);
+    if (item.sellIn < 1) {
+      item.quality = 0;
+    }
+  }
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
-      if (this.isAgedBrie(item) || this.isTicket(item)) {
-        this.updateAgedBrieAndTicket(item);
+      if (this.isAgedBrie(item)) {
+        this.updateAgedBrie(item);
       }
-      if(this.normalItems(item)){
+      if (this.isTicket(item)) {
+        this.updateTicket(item);
+      }
+      if (this.normalItems(item)) {
         this.decrementQuality(item);
       }
       item.sellIn--;
-      if (this.isAgedBrie(item) && this.isExpired(item)) {
-        this.incrementQuality(item);
-      }
-      if (this.isTicket(item) && this.isExpired(item)) {
-        item.quality = 0;
-      }
       if (this.isExpired(item)) {
         this.whenNotAgedBrie(item);
       }
