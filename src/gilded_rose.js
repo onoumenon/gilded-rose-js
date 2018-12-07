@@ -41,6 +41,14 @@ class Shop {
     }
   }
 
+  backstagePassQualityUpdate(item){
+    if (item.sellIn < 11) {
+      item.quality++;
+    }
+    if (item.sellIn < 6) {
+      item.quality++;
+  }
+}
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
@@ -50,12 +58,7 @@ class Shop {
         if (item.quality < 50) {
           item.quality++;
           if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-            if (item.sellIn < 11) {
-              item.quality++;
-            }
-            if (item.sellIn < 6) {
-              item.quality++;
-            }
+            this.backstagePassQualityUpdate(item)
           }
         }
       }
