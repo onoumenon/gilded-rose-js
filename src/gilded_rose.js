@@ -82,9 +82,9 @@ class Shop {
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
+      item.sellIn--;
       this.updateAgedBrie(item);
       
-      item.sellIn--;
       this.updateTicket(item);
 
       this.updateNormalItem(item);
