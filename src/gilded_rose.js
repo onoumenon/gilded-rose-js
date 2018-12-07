@@ -73,13 +73,18 @@ class Shop {
     }
   }
 
+  normalItems(item){
+    return item.name === 'Normal Item';
+  }
+
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
-      if (!this.isAgedBrie(item) && this.isNotTicket(item)) {
-        this.decrementQuality(item);
-      } else {
+      if (this.isAgedBrie(item) || this.isTicket(item)) {
         this.updateAgedBrieAndTicket(item);
+      }
+      if(this.normalItems(item)){
+        this.decrementQuality(item);
       }
       item.sellIn--;
       if (this.isAgedBrie(item) && this.isExpired(item)) {
