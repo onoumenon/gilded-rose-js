@@ -60,6 +60,19 @@ class Shop {
       this.backstagePassQualityUpdate(item);
     }
   }
+
+  whenNotTicket(item) {
+    if (this.isNotTicket(item)) {
+      this.decrementQuality(item);
+    }
+  }
+
+  whenNotAgedBrie(item) {
+    if (!this.isAgedBrie(item)) {
+      this.whenNotTicket(item);
+    }
+  }
+
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
@@ -76,11 +89,7 @@ class Shop {
         item.quality = 0;
       }
       if (this.isExpired(item)) {
-        if (!this.isAgedBrie(item)) {
-          if (this.isNotTicket(item)) {
-            this.decrementQuality(item);
-          }
-        }
+        this.whenNotAgedBrie(item);
       }
     }
 
