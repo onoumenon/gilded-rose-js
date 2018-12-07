@@ -43,10 +43,10 @@ class Shop {
 
   backstagePassQualityUpdate(item){
     if (item.sellIn < 11) {
-      item.quality++;
+      this.increment(item);
     }
     if (item.sellIn < 6) {
-      item.quality++;
+      this.increment(item);
   }
 }
   updateQuality() {
