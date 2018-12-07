@@ -19,6 +19,10 @@ class Shop {
     return item.name === "Backstage passes to a TAFKAL80ETC concert";
   }
 
+  isConjuredItem(item) {
+    return item.name === "Conjured Item";
+  }
+
   removeSulfuras() {
     return this.items.filter(
       item => item.name !== "Sulfuras, Hand of Ragnaros"
@@ -62,12 +66,11 @@ class Shop {
   updateTicket(item) {
     if (this.isTicket(item)) {
       if (item.sellIn < 0) {
-        return item.quality = 0;
+        return (item.quality = 0);
       }
       this.incrementQuality(item);
       this.backstagePassQualityUpdate(item);
     }
-    
   }
 
   updateNormalItem(item) {
@@ -75,22 +78,31 @@ class Shop {
       this.decrementQuality(item);
       if (this.isExpired(item)) {
         this.decrementQuality(item);
-      }      
+      }
     }
-    
+  }
+
+  updateConjuredItem(item) {
+    if (this.isConjuredItem(item)) {
+      this.decrementQuality(item);
+      this.decrementQuality(item);
+      if (this.isExpired(item)) {
+        this.decrementQuality(item);
+        this.decrementQuality(item);
+      }
+    }
   }
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
       item.sellIn--;
       this.updateAgedBrie(item);
-      
+
       this.updateTicket(item);
 
       this.updateNormalItem(item);
-      // if (this.isExpired(item)) {
-        // this.decrementQuality(item);
-      // }
+
+      this.updateConjuredItem(item);
     }
 
     return this.items;
