@@ -50,18 +50,6 @@ class Shop {
     }
   }
 
-  whenNotTicket(item) {
-    if (!this.isTicket(item)) {
-      this.decrementQuality(item);
-    }
-  }
-
-  whenNotAgedBrie(item) {
-    if (!this.isAgedBrie(item)) {
-      this.whenNotTicket(item);
-    }
-  }
-
   normalItems(item) {
     return item.name === "Normal Item";
   }
@@ -88,6 +76,7 @@ class Shop {
     let items = this.removeSulfuras();
     for (let item of items) {
       if (this.isAgedBrie(item)) {
+
         this.updateAgedBrie(item);
       }
       if (this.isTicket(item)) {
@@ -98,7 +87,7 @@ class Shop {
       }
       item.sellIn--;
       if (this.isExpired(item)) {
-        this.whenNotAgedBrie(item);
+        this.decrementQuality(item);
       }
     }
 
