@@ -42,10 +42,10 @@ class Shop {
   }
 
   backstagePassQualityUpdate(item) {
-    if (item.sellIn < 11) {
+    if (item.sellIn < 10) {
       this.incrementQuality(item);
     }
-    if (item.sellIn < 6) {
+    if (item.sellIn < 5) {
       this.incrementQuality(item);
     }
   }
@@ -55,40 +55,42 @@ class Shop {
   }
 
   updateAgedBrie(item) {
-    this.incrementQuality(item);
-    if (item.sellIn < 1) {
+    if (this.isAgedBrie(item)) {
       this.incrementQuality(item);
     }
   }
   updateTicket(item) {
-    this.incrementQuality(item);
-    this.backstagePassQualityUpdate(item);
-    if (item.sellIn < 1) {
-      item.quality = 0;
+    if (this.isTicket(item)) {
+      if (item.sellIn < 0) {
+        return item.quality = 0;
+      }
+      this.incrementQuality(item);
+      this.backstagePassQualityUpdate(item);
     }
+    
   }
 
   updateNormalItem(item) {
-    this.decrementQuality(item)
-    if (this.isExpired(item)) this.decrementQuality(item)
+    if (this.normalItems(item)) {
+      this.decrementQuality(item);
+      if (this.isExpired(item)) {
+        this.decrementQuality(item);
+      }      
+    }
+    
   }
   updateQuality() {
     let items = this.removeSulfuras();
     for (let item of items) {
-      if (this.isAgedBrie(item)) {
-
-        this.updateAgedBrie(item);
-      }
-      if (this.isTicket(item)) {
-        this.updateTicket(item);
-      }
-      if (this.normalItems(item)) {
-        this.updateNormalItem(item)
-      }
+      this.updateAgedBrie(item);
+      
       item.sellIn--;
-      if (this.isExpired(item)) {
-        this.decrementQuality(item);
-      }
+      this.updateTicket(item);
+
+      this.updateNormalItem(item);
+      // if (this.isExpired(item)) {
+        // this.decrementQuality(item);
+      // }
     }
 
     return this.items;
